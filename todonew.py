@@ -2,13 +2,20 @@ import json
 import os
 from uuid import uuid4
 from task import Task
+from dataclasses import asdict
 
 
 class ToDo:
+    """
+    Класс для управления списком задач.
+    Задачи хранятся в JSON-файле и могут быть добавлены, изменены, удалены (в том числе и вся БД) или помечены как выполненные.
+    json_name (str): Имя JSON-файла для хранения задач.
+    data (dict): Словарь с загруженными задачами.
+    """
+
     def __init__(self):
         self.json_name = "db.json"
         self.data = self._load_json()
-        self.tasks = {}
 
     def _load_json(self) -> None:
         """
@@ -28,7 +35,7 @@ class ToDo:
         """
         with open(self.json_name, "w", encoding="utf-8") as file:
             json.dump(
-                {uid: task.to_dict() for uid, task in self.data.items()},
+                {uid: asdict(task) for uid, task in self.data.items()},
                 file,
                 ensure_ascii=False,
             )
@@ -39,7 +46,6 @@ class ToDo:
         :param text: Описание задачи
         :return: ID созданной задачи
         """
-
         uid = str(uuid4())
         self.data[uid] = Task(uid, text)
         self._save_json()
@@ -53,7 +59,7 @@ class ToDo:
         if uid not in self.data:
             raise KeyError(f"Задача с ID {uid} не найдена")
 
-        self.data[uid].mark_done(True)
+        self.data[uid].is_done = True
         self._save_json()
 
     def edit_task(self, uid: str, text: str) -> None:

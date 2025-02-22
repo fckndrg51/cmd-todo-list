@@ -2,6 +2,11 @@ from todonew import ToDo
 
 
 class Menu:
+    """
+    Класс для управления консольным меню
+    Позволяет пользователю управлять списком задач через командную строку.
+    """
+
     def __init__(self, console: ToDo):
         self.console = console
 
