@@ -2,8 +2,8 @@ from todonew import ToDo
 
 
 class Menu:
-    def __init__(self):
-        self.console = ToDo()
+    def __init__(self, console: ToDo):
+        self.console = console
 
     def start_console(self) -> None:
         while True:
@@ -20,7 +20,9 @@ class Menu:
             match input("Введите номер команды: "):
                 case "1":
                     for uid, text, is_done in self.console.get_task():
-                        print(f"ID: {uid} | {text} | {'Выполнена'if is_done else 'Не выполнена'}")
+                        print(
+                            f"ID: {uid} | {text} | {'Выполнена'if is_done else 'Не выполнена'}"
+                        )
                 case "2":
                     self.console.add_task(input("Введите текст задачи: "))
                 case "3":
@@ -38,5 +40,7 @@ class Menu:
                     print("Неправильный ввод")
                     break
 
+
 if __name__ == "__main__":
-    Menu().start_console()
+    todo = ToDo()
+    Menu(todo).start_console()
