@@ -17,7 +17,7 @@ class ToDo:
         self.json_name = "db.json"
         self.data = self._load_json()
 
-    def _load_json(self) -> None:
+    def _load_json(self) -> dict:
         """
         Загружает список задач из json
         :return: Словарь с задачами
@@ -69,6 +69,7 @@ class ToDo:
         :param text: Новый текст задачи
         """
         if uid not in self.data:
+
             raise KeyError(f"Задача с ID {uid} не найдена")
 
         self.data[uid].text = text

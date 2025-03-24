@@ -31,7 +31,11 @@ class Menu:
                 case "2":
                     self.console.add_task(input("Введите текст задачи: "))
                 case "3":
-                    self.console.edit_task(input("ID: "), input("Новый текст: "))
+                    try:
+                        self.console.edit_task(input("ID: "), input("Новый текст: "))
+                    except KeyError as e:
+                        print (e)
+                        continue
                 case "4":
                     self.console.mark_done(input("ID: "))
                 case "5":
