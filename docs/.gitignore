@@ -1,4 +1,4 @@
-.idea/
+../.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -173,3 +173,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+/alembic/versions/348fe6adbb38_initial_migration.py
+/ci/.env
+/alembic/versions/197c874b0c9d_initial_migration.py
+/alembic/versions/193da9155252_initial_migration.py
