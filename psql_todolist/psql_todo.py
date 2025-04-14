@@ -1,10 +1,10 @@
 from uuid import UUID
 from psql_todolist.models import Task
 from database import SessionLocal
-from Exceptions import TaskException, TaskIsDone
+from Exceptions.Exceptions import TaskException, TaskIsDone
+from Interfaces.ToDoInterface import ToDoInterface
 
-
-class ToDoPsql:
+class ToDoPsql(ToDoInterface):
     """
     Менеджер для работы с to-do листом используя postgresql
     """
