@@ -1,13 +1,15 @@
 from uuid import UUID
 from psql_todolist.models import Task
 from database import SessionLocal
-from Exceptions.Exceptions import TaskException, TaskIsDone
+from Exceptions.Exceptions import TaskNotFoundException, TaskAlreadyDoneException
 from Interfaces.ToDoInterface import ToDoInterface
+
 
 class ToDoPsql(ToDoInterface):
     """
     Менеджер для работы с to-do листом используя postgresql
     """
+
     def add_task(self, text: str) -> None:
         """
         Добавляет новую задачу
@@ -27,9 +29,9 @@ class ToDoPsql(ToDoInterface):
         with SessionLocal() as session:
             task = session.get(Task, UUID(uid))
             if not task:
-                raise TaskException(uid)
+                raise TaskNotFoundException(uid)
             if task.is_done:
-                raise TaskIsDone(uid)
+                raise TaskAlreadyDoneException(uid)
             task.is_done = True
             session.commit()
             session.refresh(task)
@@ -43,7 +45,7 @@ class ToDoPsql(ToDoInterface):
         with SessionLocal() as session:
             task = session.get(Task, UUID(uid))
             if not task:
-                raise TaskException(uid)
+                raise TaskNotFoundException(uid)
             task.text = text
             session.commit()
             session.refresh(task)
@@ -65,9 +67,6 @@ class ToDoPsql(ToDoInterface):
         with SessionLocal() as session:
             task = session.get(Task, UUID(uid))
             if not task:
-                raise TaskException(uid)
+                raise TaskNotFoundException(uid)
             session.delete(task)
             session.commit()
-
-
-

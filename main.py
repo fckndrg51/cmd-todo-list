@@ -1,11 +1,7 @@
-from dotenv import load_dotenv
 import os
-
 from psql_todolist.psql_todo import ToDoPsql
-from Api.ApiControl import FastApiControl
-from Api.ConsoleControl import ConsoleControl
-
-load_dotenv()
+from service_control.ApiControl import FastApiControl
+from service_control.ConsoleControl import ConsoleControl
 
 if __name__ == "__main__":
     mode = os.getenv("APP_MODE", "fastapi").lower()
@@ -20,4 +16,3 @@ if __name__ == "__main__":
             raise ValueError("APP_MODE должен быть 'fastapi' или 'console'")
 
     control.run()
-
